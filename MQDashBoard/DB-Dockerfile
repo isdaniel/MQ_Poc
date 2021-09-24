@@ -1,0 +1,2 @@
+FROM dog830228/silo-db:1.0
+RUN cp -R /mssqlData /var/opt/mssql/data

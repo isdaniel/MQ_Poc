@@ -1,0 +1,34 @@
+C:\91AppRepo\nmq_poc\NodeWorkerversion: '2.2'
+
+services:
+  sqlserver:
+    image: dog830228/silo-db:1.1
+    hostname: sqlsever
+    ports:
+      - "1433:1433"
+    restart: always
+    networks:
+      - silo
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'test.123'
+      MSSQL_PID: 'Standard'
+
+  web:
+    #image: dog830228/silo-server:1.0
+    build: ./Silo/
+    ports:
+      - "8899:8899"
+    expose:
+      - "8899"
+    restart: always
+    environment:
+      DBConnection: 'Data Source=sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;'
+    networks:
+      - silo
+    depends_on:
+      - sqlserver
+
+networks:
+  silo:
+    driver: bridge

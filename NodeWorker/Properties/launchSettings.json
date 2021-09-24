@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "NodeWorker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "USERNAME": "guest",
+        "QUEUENAME": "worker-queue",
+        "RABBITMQ_HOSTNAME": "localhost",
+        "DOTNET_ENVIRONMENT": "Development",
+        "RABBITMQ_PORT": "5672",
+        "PASSWORD": "guest"
+      },
+      "dotnetRunMessages": "true"
+    }
+  }
+}

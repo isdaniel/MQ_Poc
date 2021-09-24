@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: publisher
+  labels:
+    app: publisher
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: publisher
+  template:
+    metadata:
+      labels:
+        app: publisher
+    spec:
+      imagePullSecrets:
+        - name: app-docker-dev
+      initContainers:
+      - name: wait-for-rabbitmq
+        image: travelping/nettools
+        args:
+        - /bin/bash
+        - -c
+        - 'until nc -zv rabbitmq-server 5672; do sleep 5;done;'
+      containers:
+      - name: publisher
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 50Mi
+        envFrom:
+          - configMapRef:
+              name: npq-poc-env
+          - secretRef:
+              name: mq-poc-secret
+              optional: true

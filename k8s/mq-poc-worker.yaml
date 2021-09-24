@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeworker
+  labels:
+    app: nodeworker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodeworker
+  template:
+    metadata:
+      labels:
+        app: nodeworker
+    spec:
+      imagePullSecrets:
+        - name: app-docker-dev
+      initContainers:
+        - name: wait-for-rabbitmq
+          image: travelping/nettools
+          args:
+          - /bin/bash
+          - -c
+          - 'until nc -zv rabbitmq-server 5672; do sleep 5;done;'
+      containers:
+      - name: nodeworker
+        resources:
+          requests:
+            cpu: 100m
+            memory: 50Mi
+          limits:
+            cpu: 100m
+            memory: 50Mi
+        envFrom:
+          - configMapRef:
+              name: npq-poc-env
+          - secretRef:
+              name: mq-poc-secret
+              optional: true
