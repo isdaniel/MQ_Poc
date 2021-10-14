@@ -14,7 +14,6 @@ namespace NodeWorker
         private BlockingCollection<MessageTask> _taskQueue;
         private List<Task> _workers = new List<Task>();
         private readonly int _processCount;
-        private ManualResetEvent _notify = new ManualResetEvent(false);
         private volatile bool _finish = false;
         private List<Process> _processList = new List<Process>();
         public ProcessPool(PoolSetting poolSetting)
@@ -62,26 +61,21 @@ namespace NodeWorker
 
 
         public Task<bool> AddTaskAsync(MessageTask task){
-
-            _taskQueue.Add(task);
-            _notify.Set();
-            return Task.FromResult(true);
+            bool result = false;
+            if(!_finish){
+                _taskQueue.Add(task);
+                result = true;
+            }
+            return Task.FromResult(result);
         }
 
         private void ProcessHandler(Process process)
         {
             while (true){
-                while(_taskQueue.Count > 0){
-                    if (_taskQueue.TryTake(out MessageTask task))
-                    {
-                        process.StandardInput.WriteLine(task.ToJsonMessage());
-                    }
-                }
-                if(_finish)
+                var task= _taskQueue.Take();
+                task.Execute();
+                if(_finish && _taskQueue.Count == 0)
                     break;
-
-                _notify.WaitOne();
-                _notify.Reset();
             }
 
             process.StandardInput.WriteLine(CLOSED_SIGNAL);
@@ -89,7 +83,6 @@ namespace NodeWorker
 
         public async Task WaitFinishedAsync(){
             _finish = true;
-            _notify.Set();
         
             foreach (var process in _processList)
             {
