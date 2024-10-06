@@ -17,14 +17,15 @@ spec:
       imagePullSecrets:
         - name: app-docker-dev
       initContainers:
-      - name: wait-for-rabbitmq
-        image: travelping/nettools
-        args:
-        - /bin/bash
-        - -c
-        - 'until nc -zv rabbitmq-server 5672; do sleep 5;done;'
+        - name: wait-for-rabbitmq
+          image: travelping/nettools
+          args:
+          - /bin/bash
+          - -c
+          - 'until nc -zv rabbitmq-server 5672; do sleep 5;done;'
       containers:
       - name: publisher
+        image: dog830228/mq_poc-publisher
         resources:
           requests:
             cpu: 100m

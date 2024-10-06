@@ -20,7 +20,8 @@ services:
     networks:
       - net-mq
   publisher:
-    build: ./Publisher/
+    # build: ./Publisher/
+    image: dog830228/mq_poc-publisher
     environment:
       - QUEUENAME=${QUEUENAME}
       - RABBITMQ_HOSTNAME=${RABBITMQ_HOSTNAME}
@@ -31,7 +32,8 @@ services:
     networks:
       - net-mq
   nodeworker:
-    build: ./NodeWorker/
+    # build: ./NodeWorker/
+    image: dog830228/mq_poc-nodeworker
     environment:
       - QUEUENAME=${QUEUENAME}
       - RABBITMQ_HOSTNAME=${RABBITMQ_HOSTNAME}

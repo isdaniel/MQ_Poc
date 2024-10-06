@@ -25,6 +25,7 @@ spec:
           - 'until nc -zv rabbitmq-server 5672; do sleep 5;done;'
       containers:
       - name: nodeworker
+        image: dog830228/mq_poc-nodeworker
         resources:
           requests:
             cpu: 100m

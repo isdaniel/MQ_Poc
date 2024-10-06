@@ -119,7 +119,7 @@ kubectl apply -f  ./k8s/mq-poc-configmap.yaml
 ### 安裝 rabbitmq cluster-operator
 
 ```cmd
-kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/latest/download/cluster-operator.yml
+kubectl apply -f https://github.com/rabbitmq/cluster-operator/releases/download/v1.14.0/cluster-operator.yml
 ```
 
 ```cmd
