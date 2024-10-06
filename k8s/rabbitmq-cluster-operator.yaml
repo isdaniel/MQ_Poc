@@ -2,10 +2,11 @@ apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
   name: rabbitmq-server
-  app: rabbitmq-server
 spec:
   image: rabbitmq:3.9.4-management
   rabbitmq:
     additionalConfig: |
       default_user=guest
       default_pass=guest
+  # service:
+  #   type: LoadBalancer
