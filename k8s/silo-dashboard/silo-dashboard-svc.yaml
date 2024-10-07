@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: siloweb-service
+spec:
+  type: NodePort   # Or use LoadBalancer if available in your cluster
+  ports:
+  - port: 8899
+    targetPort: 8899
+    nodePort: 30001  # Optional, Kubernetes will auto-assign if not provided
+  selector:
+    app: siloweb

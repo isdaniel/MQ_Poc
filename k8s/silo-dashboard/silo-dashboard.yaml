@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: siloweb-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: siloweb
+  template:
+    metadata:
+      labels:
+        app: siloweb
+    spec:
+      containers:
+      - name: siloweb
+        image: dog830228/silo-server:1.1
+        ports:
+        - containerPort: 8899
+        env:
+        - name: DBConnection
+          value: "Data Source=silo-sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"
