@@ -19,4 +19,4 @@ spec:
         - containerPort: 8899
         env:
         - name: DBConnection
-          value: "Data Source=silo-sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"
+          value: "Data Source=sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"

@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: sqlserver
 spec:
-  clusterIP: None  
+  #type: LoadBalancer  
   ports:
   - port: 1433
     targetPort: 1433
+    protocol: TCP
   selector:
     app: sqlserver

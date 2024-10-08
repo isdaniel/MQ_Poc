@@ -1,9 +1,9 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: silo-sqlserver
 spec:
-  serviceName: "sqlserver"   
+  #serviceName: "sqlserver"   
   replicas: 1
   selector:
     matchLabels:
@@ -28,14 +28,14 @@ spec:
               key: SA_PASSWORD
         - name: MSSQL_PID
           value: "Standard"
-        volumeMounts:
-        - name: mssql-data
-          mountPath: /var/opt/mssql  # Path where SQL Server stores data
-  volumeClaimTemplates:
-  - metadata:
-      name: mssql-data
-    spec:
-      accessModes: ["ReadWriteOnce"]
-      resources:
-        requests:
-          storage: 10Gi  # Size of the persistent volume (adjust as needed)
+  #       volumeMounts:
+  #       - name: mssql-data
+  #         mountPath: /var/opt/mssql/data # Path where SQL Server stores data
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: mssql-data
+  #   spec:
+  #     accessModes: ["ReadWriteOnce"]
+  #     resources:
+  #       requests:
+  #         storage: 10Gi  # Size of the persistent volume (adjust as needed)

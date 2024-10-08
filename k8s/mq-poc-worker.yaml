@@ -28,14 +28,20 @@ spec:
         image: dog830228/mq_poc-nodeworker
         resources:
           requests:
-            cpu: 100m
-            memory: 50Mi
+            cpu: 300m
+            memory: 300Mi
           limits:
-            cpu: 100m
-            memory: 50Mi
+            cpu: 300m
+            memory: 300Mi
+        env:
+          - name: DBConnection
+            value: "Data Source=sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"
         envFrom:
           - configMapRef:
               name: npq-poc-env
           - secretRef:
               name: mq-poc-secret
               optional: true
+
+
+
