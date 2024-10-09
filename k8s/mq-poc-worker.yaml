@@ -33,9 +33,6 @@ spec:
           limits:
             cpu: 300m
             memory: 300Mi
-        env:
-          - name: DBConnection
-            value: "Data Source=sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"
         envFrom:
           - configMapRef:
               name: npq-poc-env

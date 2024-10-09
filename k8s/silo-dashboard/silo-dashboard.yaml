@@ -1,3 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: siloweb-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8899
+    targetPort: 8899
+  selector:
+    app: siloweb
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -12,11 +25,18 @@ spec:
       labels:
         app: siloweb
     spec:
+      initContainers:
+      - name: wait-for-sqlserver
+        image: travelping/nettools
+        args:
+        - /bin/bash
+        - -c
+        - 'until nc -zv silo-sqlserver 1433; do sleep 5;done;'
       containers:
       - name: siloweb
         image: dog830228/silo-server:1.1
         ports:
         - containerPort: 8899
-        env:
-        - name: DBConnection
-          value: "Data Source=sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"
+        envFrom:
+          - configMapRef:
+              name: npq-poc-env

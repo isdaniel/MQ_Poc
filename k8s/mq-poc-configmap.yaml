@@ -6,3 +6,4 @@ data:
   QUEUENAME: worker-queue
   RABBITMQ_HOSTNAME: rabbitmq-server
   RABBITMQ_PORT: "5672"
+  DBConnection: "Data Source=silo-sqlserver;Initial Catalog=orleans;User ID=sa;Password=test.123;"

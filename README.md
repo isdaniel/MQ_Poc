@@ -159,3 +159,9 @@ k8s scale worker
 ```cmd
 kubectl scale --replicas=3 -f .\k8s\mq-poc-worker.yaml
 ```
+
+## All in one apply by powershell.
+
+```
+.\k8s\apply-k8s-all.ps1     
+```
