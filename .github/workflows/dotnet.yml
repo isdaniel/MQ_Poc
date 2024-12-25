@@ -1,0 +1,19 @@
+name: .NET
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: adambirds/docker-compose-action@v1.5.0
+      with:
+        compose-file: "docker-compose.yml"
+        # test-container: "container1"
+        # test-command: "npm test"
+
+
