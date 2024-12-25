@@ -15,5 +15,8 @@ jobs:
         compose-file: "docker-compose.yml"
         # test-container: "container1"
         # test-command: "npm test"
-
+      env:
+        RABBITMQ_HOSTNAME: "rabbitmq-server"
+        QUEUENAME: "worker-queue"
+        RABBITMQ_PORT: 5672
 
